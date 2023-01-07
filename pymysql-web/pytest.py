@@ -11,7 +11,7 @@ conn = pymysql.connect(
 #定义光标，我们通过这个光标执行sql语句
 cursor = conn.cursor()
 cursor.execute("show tables")
-info = (2022212547,"iloveu",1010101233,"2023-1-1")
+info = (202245678,"iloveutooo",1010102333,"2023-1-4")
 #执行插入语句
 #使用下面的句子，如果是面向外部的接口，就容易被sql注入
 # cursor.execute("insert into user (id,username,password,question,question_content) value(%s,'%s','%s','%s','%s')"%info)
@@ -20,7 +20,7 @@ info = (2022212547,"iloveu",1010101233,"2023-1-1")
 cursor.execute("insert into users (account_num,account_name,account_pass,entry_date) value(%s,%s,%s,%s)", info)
 conn.commit()
 #执行查表语句
-cursor.execute("select * from users where account_name=%s", "ikun")
+cursor.execute("select * from users where account_name=%s", "iloveutooo")
 conn.commit()
 result = cursor.fetchone()
 print(result)
