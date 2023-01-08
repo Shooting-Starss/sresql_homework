@@ -1,6 +1,5 @@
 import pymysql
 from flask import Flask,request
-from gevent import pywsgi
 
 #定义mysql操作对象
 conn = pymysql.connect(
@@ -33,6 +32,22 @@ def register():
         print(e)
         return "注册出错了捏"
 
+#实现用户登录的功能
+@app.get('/login')
+def login():
+    account_num = request.args.get("account_num", "")
+    account_pass = request.args.get("account_pass", "")
+    info = (account_num, account_pass)
+    try:
+        cursor.execute("select * from users where account_num=%s and account_pass=%s", info)
+        conn.commit()
+        result = cursor.fetchone()
+        print(list(result))
+        return "登录成功，你的账户是" + account_num
+    except Exception as e:
+        print(e)
+        return "登录失败，你再想想？或许是账户或者密码错了哦"
+
 @app.get('/get_info')
 def get_info():
     account_name = request.args.get("account_name", "")
@@ -45,4 +60,4 @@ def get_info():
 
 if __name__ == '__main__':
     print(app.url_map)
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=7000)
